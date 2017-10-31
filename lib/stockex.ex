@@ -9,10 +9,6 @@ defmodule Stockex do
     Poison.decode! info
   end
 
-  def eps(ticker) do 
-    %HTTPoison.Response{body: resp} = HTTPoison.get! "https://api.intrinio.com/" <> "data_point?identifier=#{ticker}&item=basiceps", @headers
-    resp |> Poison.decode! |> Map.get("value")
-  end
 
 
 
