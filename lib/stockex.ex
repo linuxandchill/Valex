@@ -1,6 +1,8 @@
 defmodule Stockex do
   @base_url Utils.return_base()
   @headers Utils.return_headers()
+  #import Utils
+  #import Info
 
   def getPrices(ticker) when is_binary(ticker) do
 
