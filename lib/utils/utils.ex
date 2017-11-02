@@ -4,16 +4,15 @@ defmodule Utils do
   @base_url "https://api.intrinio.com/"
   @headers %{"Authorization" => "Basic " <> Base.encode64("#{@username}:#{@password}")}
 
-  def return_headers do 
-    @headers
+  def return_headers do @headers
   end
 
   def return_base do 
     @base_url
   end
 
-    # def prices_url(symbol) do
-    # de"prices?ticker=#{symbol}"
+  # def prices_url(symbol) do
+  # de"prices?ticker=#{symbol}"
   # end
 
   def page_loop(current_page \\ 1, acc \\ [], ticker \\ "") do 
@@ -50,5 +49,12 @@ defmodule Utils do
      IO.puts "Now conducting analysis on #{ticker}"
      ticker
   end
+
+  defp subtract(x, y) do
+      x - y
+  end
+
+  def average(list), do: Enum.sum(list) / length(list)
+
 end
 

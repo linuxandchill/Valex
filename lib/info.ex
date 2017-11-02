@@ -21,8 +21,7 @@ defmodule Info do
      %HTTPoison.Response{body: net_income} = 
        HTTPoison.get! "https://api.intrinio.com/" <> "data_point?identifier=#{@ticker}&item=netincome", @headers
        net_income = net_income |> Utils.process_resp |> Map.get("value") 
-
-      %HTTPoison.Response{body: shares_os} = 
+%HTTPoison.Response{body: shares_os} = 
         HTTPoison.get! "https://api.intrinio.com/" <> "data_point?identifier=#{@ticker}&item=weightedavedilutedsharesos", @headers
       shares_os = shares_os |> Poison.decode! |> Map.get("value") 
       
@@ -38,7 +37,7 @@ defmodule Info do
    end
 
   #eps/share_price x 100
-  def return_perc() do 
+  def basic_expected_return() do 
    eps = eps()
    share_price = last_price()
    return = (eps / share_price)*100
@@ -72,6 +71,20 @@ defmodule Info do
       debt_eq > 0.5 -> "#{debt_eq} HIGH-RISK" 
       true -> debt_eq
     end
+  end
+
+  def avg_dividend do 
+    %HTTPoison.Response{body: resp} = 
+      HTTPoison.get! @base_url <> 
+      "historical_data?identifier=DIS&item=dividend", @headers
+
+    resp 
+      |> Utils.process_resp 
+      |> Map.get("data") 
+      |> Stream.take(10)
+      |> Enum.map(fn(x) -> Map.get(x, "value") end)
+      |> Utils.average
+      |> Float.round(2)
   end
 
 end
