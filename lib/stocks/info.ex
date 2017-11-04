@@ -87,4 +87,8 @@ defmodule Info do
       |> Float.round(2)
   end
 
+  def call_ticker do 
+    IO.puts @ticker
+  end
+
 end
