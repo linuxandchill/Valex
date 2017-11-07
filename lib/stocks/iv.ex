@@ -4,6 +4,7 @@ defmodule IV do
   @ticker Utils.load_ticker()
 
   #Div*(1-(1/(1+i)^n)/i + FV/(1+i)^n
+  #rate refers to interest rate
   def intrinsic_val(rate) do 
     div = Info.avg_dividend
     future_bv = future_val()
